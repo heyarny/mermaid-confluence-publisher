@@ -33,9 +33,13 @@ ENV ASCIIDOC_ROOT_FOLDER="/var/asciidoc-root-folder" \
     PROXY_PASSWORD="" \
     CONVERT_ONLY="false"
 
+VOLUME /var/asciidoc-root-folder
+
 # taken from https://github.com/mermaid-js/mermaid-cli/blob/10.9.1/Dockerfile#L19
 ENV PATH=$PATH:/home/mermaidcli/node_modules/.bin
 
 # as the confluence-publisher need this binary in the $PATH
 RUN which mmdc
 USER mermaidcli
+
+ENTRYPOINT ["publish.sh"]
