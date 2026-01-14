@@ -1,7 +1,6 @@
 FROM heyarny/confluence-publisher:latest as publisher
 
-# still at 10.x due to https://github.com/mermaid-js/mermaid-cli/issues/671
-FROM minlag/mermaid-cli:10.9.1
+FROM minlag/mermaid-cli:11.12.0
 
 USER root
 
@@ -38,8 +37,11 @@ VOLUME /var/asciidoc-root-folder
 # taken from https://github.com/mermaid-js/mermaid-cli/blob/10.9.1/Dockerfile#L19
 ENV PATH=$PATH:/home/mermaidcli/node_modules/.bin
 
-# as the confluence-publisher need this binary in the $PATH
-RUN which mmdc
+# wrapper so calls to `mmdc` always use the Puppeteer config (e.g. no-sandbox flags)
+RUN printf '%s\n' '#!/bin/sh' \
+  '/home/mermaidcli/node_modules/.bin/mmdc -p /puppeteer-config.json "$@"' \
+  > /usr/local/bin/mmdc && chmod +x /usr/local/bin/mmdc
+
 USER mermaidcli
 
 ENTRYPOINT ["publish.sh"]
