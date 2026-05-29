@@ -1,6 +1,6 @@
-FROM heyarny/confluence-publisher:latest as publisher
+FROM ghcr.io/heyarny/confluence-publisher:0.32.0-heyarny AS publisher
 
-FROM minlag/mermaid-cli:11.12.0
+FROM minlag/mermaid-cli:11.15.0
 
 USER root
 
@@ -34,7 +34,7 @@ ENV ASCIIDOC_ROOT_FOLDER="/var/asciidoc-root-folder" \
 
 VOLUME /var/asciidoc-root-folder
 
-# taken from https://github.com/mermaid-js/mermaid-cli/blob/10.9.1/Dockerfile#L19
+# taken from https://github.com/mermaid-js/mermaid-cli/blob/11.15.0/Dockerfile#L19
 ENV PATH=$PATH:/home/mermaidcli/node_modules/.bin
 
 # wrapper so calls to `mmdc` always use the Puppeteer config (e.g. no-sandbox flags)
