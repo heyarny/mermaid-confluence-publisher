@@ -1,6 +1,6 @@
-FROM ghcr.io/heyarny/confluence-publisher:0.32.0-heyarny AS publisher
+FROM confluencepublisher/confluence-publisher:0.35.0 AS publisher
 
-FROM minlag/mermaid-cli:11.15.0
+FROM minlag/mermaid-cli:12.0.1
 
 USER root
 
